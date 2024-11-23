@@ -1,18 +1,21 @@
-function updateCLock(time) {
+const clockElement = document.getElementById("clock")
+const timeList = document.getElementById("timeList");
+const localTime = document.getElementById("localTime");
+
+function updateCLock() {
     const now = new Date();
-    const hours = String(now.getUTCHours() + time).padStart(2, "0");
+
+    const timeZone = parseInt(timeList.value, 10);
+
+    const hours = String(now.getUTCHours() + timeZone).padStart(2, "0");
     const minutes = String(now.getUTCMinutes()).padStart(2, "0");
     const seconds = String(now.getUTCSeconds()).padStart(2, "0");
-    document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds}`;
-
-    const timeList = document.getElementById("timeList");
-    timeZone = parseInt(timeList.value, 10);
-    setInterval(updateCLock(timeZone), 1000);
+    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    localTime.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
-let timeZone = 0;
-
-timeList.addEventListener('change', updateCLock(timeZone))
+setInterval(updateCLock, 1000);
+timeList.addEventListener('change', updateCLock)
 
 
 
